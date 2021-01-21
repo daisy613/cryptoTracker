@@ -1,0 +1,38 @@
+﻿@page "/settings"
+@using CryptoTracker.Core.Models
+
+<EditForm Model="_settings">
+    <div class="mb-3">
+        <label for="key">Key</label>
+        <input id="key" type="text" class="form-control" @bind="_settings.Key" />
+    </div>
+
+    <div class="mb-3">
+        <label for="secret">Secret</label>
+        <input id="secret" type="text" class="form-control" @bind="_settings.Secret" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" @onclick="UpdateDataAsync">Update</button>
+</EditForm>
+
+@code {
+    private ExchangeSettings _settings;
+
+    protected override void OnInitialized()
+    {
+        _settings = new();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Request settings here
+        }
+    }
+
+    private async Task UpdateDataAsync()
+    {
+        // Send data here
+    }
+}
