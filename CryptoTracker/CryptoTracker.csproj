@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Repositories\" />
     <Folder Include="wwwroot\css\bootstrap\" />
   </ItemGroup>
 

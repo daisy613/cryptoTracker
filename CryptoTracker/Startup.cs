@@ -1,3 +1,4 @@
+using CryptoTracker.Core.Database;
 using CryptoTracker.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,12 @@ namespace CryptoTracker
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+
+            using var context = new DatabaseContext();
+            context.Database.EnsureCreated(); // TODO: Use migration instead of EnsureCreated()
         }
 
         public IConfiguration Configuration { get; }

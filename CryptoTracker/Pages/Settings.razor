@@ -1,38 +1,84 @@
 ﻿@page "/settings"
 @using CryptoTracker.Core.Models
+@using CryptoTracker.Core.Repositories
+
+@if (_showMessage)
+{
+    <div class="alert alert-success" role="alert">
+        <h5 class="alert-heading">Success!</h5>
+        Data has been updated.
+    </div>
+}
 
 <EditForm Model="_settings">
     <div class="mb-3">
+        <label for="exchange">Exchange</label>
+        <select id="exchange" class="form-select" value="@_settings.Exchange" @onchange="OnExchangeChanged">
+            @foreach (var exchange in Enum.GetValues(typeof(SupportedExchanges)))
+            {
+                <option value="@exchange">@exchange</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
         <label for="key">Key</label>
-        <input id="key" type="text" class="form-control" @bind="_settings.Key" />
+        <input id="key" type="text" class="form-control" @bind="_settings.Key" readonly="@_busy" />
     </div>
 
     <div class="mb-3">
         <label for="secret">Secret</label>
-        <input id="secret" type="text" class="form-control" @bind="_settings.Secret" />
+        <input id="secret" type="text" class="form-control" @bind="_settings.Secret" readonly="@_busy" />
     </div>
 
-    <button type="submit" class="btn btn-primary" @onclick="UpdateDataAsync">Update</button>
+    <button type="submit" class="btn btn-primary" @onclick="UpdateDataAsync" disabled="@_busy">Update</button>
 </EditForm>
 
 @code {
     private ExchangeSettings _settings;
+    private bool _busy;
+    private bool _showMessage;
 
     protected override void OnInitialized()
     {
         _settings = new();
+        _busy = true;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
+            await GetDataAsync(_settings.Exchange);
+    }
+
+    private async Task OnExchangeChanged(ChangeEventArgs changeEventArgs)
+    {
+        string data = changeEventArgs.Value?.ToString();
+
+        if (!_busy && Enum.TryParse(data, out SupportedExchanges exchange))
         {
-            // Request settings here
+            await GetDataAsync(exchange);
         }
+    }
+
+    private async Task GetDataAsync(SupportedExchanges exchange)
+    {
+        _settings = await ExchangeSettingsRepository.GetSettings(exchange);
+        _busy = false;
+        StateHasChanged();
     }
 
     private async Task UpdateDataAsync()
     {
-        // Send data here
+        _busy = true;
+        StateHasChanged();
+        await ExchangeSettingsRepository.SetSettings(_settings);
+        _busy = false;
+
+        _showMessage = true;
+        StateHasChanged();
+        await Task.Delay(5 * 1000);
+        _showMessage = false;
+        StateHasChanged();
     }
 }
