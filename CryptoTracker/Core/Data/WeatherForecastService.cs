@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CryptoTracker.Data
+namespace CryptoTracker.Core.Data
 {
     public class WeatherForecastService
     {
