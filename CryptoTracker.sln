@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoTracker", "CryptoTracker\CryptoTracker.csproj", "{717B18AA-8BF8-47A2-9E7D-EA7AAEF77F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoTracker", "CryptoTracker\CryptoTracker.csproj", "{717B18AA-8BF8-47A2-9E7D-EA7AAEF77F7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{9584AAEE-B214-4D28-8E48-67049B61CB46}"
 EndProject
