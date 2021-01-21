@@ -1,6 +1,6 @@
 using System;
 
-namespace CryptoTracker.Core.Data
+namespace CryptoTracker.Core.Models
 {
     public class WeatherForecast
     {
